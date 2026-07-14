@@ -1,198 +1,87 @@
-/*=========================
-FAIZ SERVICES SCRIPT
-=========================*/
+/* =========================================
+   FAIZ SERVICES - SCRIPT.JS
+========================================= */
 
 // Mobile Menu
 
 const menuBtn = document.querySelector(".menu-btn");
 const navLinks = document.querySelector(".nav-links");
 
-menuBtn.addEventListener("click", () => {
-    navLinks.classList.toggle("show");
-});
+if (menuBtn) {
+    menuBtn.addEventListener("click", () => {
+        navLinks.classList.toggle("show");
+    });
+}
 
-// Sticky Navbar
+// Sticky Header
 
 window.addEventListener("scroll", () => {
 
-const header = document.querySelector("header");
+    const header = document.querySelector("header");
 
-if(window.scrollY > 80){
-header.classList.add("sticky");
-}
-else{
-header.classList.remove("sticky");
-}
+    if (window.scrollY > 80) {
+        header.classList.add("sticky");
+    } else {
+        header.classList.remove("sticky");
+    }
 
 });
 
 // Smooth Scroll
 
-document.querySelectorAll('a[href^="#"]').forEach(anchor=>{
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 
-anchor.addEventListener("click",function(e){
+    anchor.addEventListener("click", function (e) {
 
-e.preventDefault();
+        e.preventDefault();
 
-document.querySelector(this.getAttribute("href")).scrollIntoView({
+        const target = document.querySelector(this.getAttribute("href"));
 
-behavior:"smooth"
+        if (target) {
+            target.scrollIntoView({
+                behavior: "smooth"
+            });
+        }
 
-});
-
-});
-
-});
-
-// Counter Animation
-
-const counters=document.querySelectorAll(".counter-box h2");
-
-const speed=200;
-
-counters.forEach(counter=>{
-
-const updateCount=()=>{
-
-const target=counter.innerText.replace(/\D/g,'');
-
-const count=+counter.getAttribute("data-count")||0;
-
-const inc=target/speed;
-
-if(count<target){
-
-counter.setAttribute("data-count",Math.ceil(count+inc));
-
-counter.innerText=Math.ceil(count+inc)+"+";
-
-setTimeout(updateCount,20);
-
-}else{
-
-counter.innerText=target+"+";
-
-}
-
-}
-
-updateCount();
+    });
 
 });
+/* =========================================
+   HERO SLIDER
+========================================= */
 
-// Scroll To Top Button
+const slides = document.querySelectorAll(".slide");
 
-const topBtn=document.createElement("button");
+if (slides.length > 0) {
 
-topBtn.innerHTML='<i class="fa-solid fa-arrow-up"></i>';
+    let currentSlide = 0;
 
-topBtn.id="topBtn";
+    function showSlide(index) {
 
-document.body.appendChild(topBtn);
+        slides.forEach((slide) => {
+            slide.classList.remove("active");
+        });
 
-window.addEventListener("scroll",()=>{
+        slides[index].classList.add("active");
 
-if(window.scrollY>400){
+    }
 
-topBtn.style.display="block";
+    function nextSlide() {
 
-}else{
+        currentSlide++;
 
-topBtn.style.display="none";
+        if (currentSlide >= slides.length) {
+            currentSlide = 0;
+        }
 
-}
+        showSlide(currentSlide);
 
-});
+    }
 
-topBtn.addEventListener("click",()=>{
+    // پہلی Slide دکھائیں
+    showSlide(0);
 
-window.scrollTo({
-
-top:0,
-
-behavior:"smooth"
-
-});
-
-});
-
-// Fade Animation
-
-const observer=new IntersectionObserver(entries=>{
-
-entries.forEach(entry=>{
-
-if(entry.isIntersecting){
-
-entry.target.classList.add("show-item");
-
-}
-
-});
-
-});
-
-document.querySelectorAll(".service-card,.why-card,.feature,.counter-box").forEach(el=>{
-
-el.classList.add("hidden-item");
-
-observer.observe(el);
-
-});
-/* Scroll To Top */
-
-.top-btn{
-
-position:fixed;
-
-right:25px;
-
-bottom:25px;
-
-width:55px;
-
-height:55px;
-
-background:#0b63ce;
-
-color:#fff;
-
-border-radius:50%;
-
-display:flex;
-
-align-items:center;
-
-justify-content:center;
-
-font-size:22px;
-
-cursor:pointer;
-
-opacity:0;
-
-visibility:hidden;
-
-transition:.35s;
-
-z-index:9999;
-
-box-shadow:0 10px 25px rgba(0,0,0,.25);
-
-}
-
-.top-btn.show{
-
-opacity:1;
-
-visibility:visible;
-
-}
-
-.top-btn:hover{
-
-transform:translateY(-5px);
-
-background:#084da1;
+    // ہر 5 سیکنڈ بعد Slide تبدیل کریں
+    setInterval(nextSlide, 5000);
 
     }
