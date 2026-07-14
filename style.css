@@ -129,9 +129,38 @@ z-index:2;
 }
 
 .slide img{
+position:absolute;
+top:0;
+left:0;
 width:100%;
 height:100%;
 object-fit:cover;
+object-position:center center;
+}
+
+@media (max-width:768px){
+
+.slide img{
+
+object-position:70% center;
+
+}
+
+.hero-content{
+
+left:5%;
+right:5%;
+max-width:90%;
+
+}
+
+.hero-content h1{
+
+font-size:36px;
+
+}
+
+}
 animation:heroZoom 10s ease-in-out infinite alternate;
 }
 
